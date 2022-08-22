@@ -11,6 +11,9 @@
 
 \usepackage{alltt}
 
+% Multiple columns
+\usepackage{multicol}
+
 \addtocounter{footnote}{1}
 \setcounter{tocdepth}{5}
 \setcounter{secnumdepth}{5}
@@ -26,6 +29,8 @@
 \institute{}
 \date[VLC]
 {Copenhagen C/C++ Meetup, August 2022}
+
+\beamertemplatenavigationsymbolsempty
 
 %% Reference an equation, a figure, or a section
 
@@ -77,7 +82,7 @@
 %
 % FRONT PAGE
 %
-\begin{frame}
+\begin{frame}[plain]
     \titlepage
 \end{frame}
 
@@ -85,7 +90,7 @@
 %
 % TABLE OF CONTENTS
 %
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{Contents}
 \tableofcontents
 \end{frame}
@@ -94,7 +99,7 @@
 %
 % MOTIVATION
 %
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{Motivation}
 \section{Motivation}
 \end{frame}
@@ -103,7 +108,7 @@
 %
 % EVOLUTION OF C++
 %
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{Evolution of C++}
 \section{Evolution of C++}
 \end{frame}
@@ -112,7 +117,7 @@
 %
 % STATUS QUO
 %
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{Status Quo}
 \section{Status Quo}
 \end{frame}
@@ -121,7 +126,7 @@
 %
 % HEADER FILES ARE PROBLEMATIC
 %
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{Header files are problematic}
 \section{Header files}
 \end{frame}
@@ -130,7 +135,7 @@
 %
 % BLANK SLATE IS IMPOSSIBLE
 %
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{Blank slate is impossible}
 \section{Blank slate?}
 \end{frame}
@@ -139,7 +144,7 @@
 %
 % THE MODULES PROPOSAL
 %
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{The modules proposal}
 \section{The proposal}
 \end{frame}
@@ -148,7 +153,7 @@
 %
 % WHAT IS A MODULE
 %
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{What is a module?}
 \section{What is a module?}
 \end{frame}
@@ -157,7 +162,7 @@
 %
 % THE PROMISE OF MODULES
 %
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{The promise of modules}
 \section{The promise of modules}
 \begin{itemize}
@@ -179,7 +184,7 @@ has - let's use it!
 %
 % THE BUILDING BLOCKS
 %
-\begin{frame}
+\begin{frame}[plain]
 \frametitle{The building blocks}
 \section{The building blocks}
 We get 4 new "classifications" of files:
@@ -203,6 +208,44 @@ We get 4 new "classifications" of files:
 in module interface
 \end{itemize}
 \end{itemize}
+\end{frame}
+
+
+%
+% MODULE INTERFACE FILE STRUCTURE
+%
+\begin{frame}[plain]
+\frametitle{Module interface file structure}
+\section{File structure}
+\begin{multicols}{2}
+\begin{alltt}\scriptsize
+module;\\
+
+\#define NDEBUG\\
+\#include <assert.h>\\
+
+export module foo;\\
+\vspace{7mm}
+
+import <string>;\\
+\vspace{6.5mm}
+
+export \{\\
+\qquad int magic\_value() { return 42; }\\
+\}
+\columnbreak
+
+$\leftarrow$ global module fragment (\textit{May be used for preprocessor directives. Not required.})\\
+\vspace{3.5mm}
+
+$\leftarrow$ module declaration (\textit{The rest of the file is considered part of this module.})\\
+
+$\leftarrow$ import declaration (\textit{Other modules or header units may be imported.})\\
+
+$\leftarrow$ export declaration (\textit{Everything inside is visible for consumers of the module.})
+
+\end{alltt}
+\end{multicols}
 \end{frame}
 
 
