@@ -1,0 +1,210 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+
+\usepackage{alltt}
+
+\addtocounter{footnote}{1}
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+\renewcommand{\floatpagefraction}{0.75}
+
+%\usetheme{CambridgeUS}
+\usetheme{Warsaw}
+
+%Information to be included in the title page:
+\title{Modularized C++}
+\subtitle{A modern approach to C++ project setup}
+\author{Alexander Christensen}
+\institute{}
+\date[VLC]
+{Copenhagen C/C++ Meetup, August 2022}
+
+%% Reference an equation, a figure, or a section
+
+%% \secref{label} - make a reference to a section
+\newcommand{\secref}[1]{Section~\ref{#1}}
+
+%% \eqref{reference} - make a reference to an equation
+%%\newcommand{\eqref}[1]{(\ref{#1})}
+
+%% \figref{reference} - make a reference to an figure
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+
+\newcommand{\basetop}[1]{\vtop{\vskip-1ex\hbox{#1}}}
+\newcommand{\source}[1]{\let\thefootnote\relax\footnotetext{\scriptsize\textcolor{kugray1}{Source: #1}}}
+
+%\bibliographystyle{longalpha}
+%\bibliography{refs}
+
+\input{mybeamermacros}
+
+%% Kennys pseudocode environment
+
+\newenvironment{pseudocode}{
+  \begin{center}
+    \begin{minipage}[t]{0.8\columnwidth}
+      \footnotesize
+      \rule{\columnwidth}{1pt}
+    }{
+      \rule{\columnwidth}{1pt}
+    \end{minipage}
+  \end{center}
+}
+
+{
+\AtBeginSection[wef]
+{
+\begin{frame}
+\frametitle{Table of Contents}
+\tableofcontents[currentsection]{1}
+\end{frame}
+}
+}
+
+
+
+\begin{document}
+
+
+%
+% FRONT PAGE
+%
+\begin{frame}
+    \titlepage
+\end{frame}
+
+
+%
+% TABLE OF CONTENTS
+%
+\begin{frame}
+\frametitle{Contents}
+\tableofcontents
+\end{frame}
+
+
+%
+% MOTIVATION
+%
+\begin{frame}
+\frametitle{Motivation}
+\section{Motivation}
+\end{frame}
+
+
+%
+% EVOLUTION OF C++
+%
+\begin{frame}
+\frametitle{Evolution of C++}
+\section{Evolution of C++}
+\end{frame}
+
+
+%
+% STATUS QUO
+%
+\begin{frame}
+\frametitle{Status Quo}
+\section{Status Quo}
+\end{frame}
+
+
+%
+% HEADER FILES ARE PROBLEMATIC
+%
+\begin{frame}
+\frametitle{Header files are problematic}
+\section{Header files}
+\end{frame}
+
+
+%
+% BLANK SLATE IS IMPOSSIBLE
+%
+\begin{frame}
+\frametitle{Blank slate is impossible}
+\section{Blank slate?}
+\end{frame}
+
+
+%
+% THE MODULES PROPOSAL
+%
+\begin{frame}
+\frametitle{The modules proposal}
+\section{The proposal}
+\end{frame}
+
+
+%
+% WHAT IS A MODULE
+%
+\begin{frame}
+\frametitle{What is a module?}
+\section{What is a module?}
+\end{frame}
+
+
+%
+% THE PROMISE OF MODULES
+%
+\begin{frame}
+\frametitle{The promise of modules}
+\section{The promise of modules}
+\begin{itemize}
+\item That we may rid our projects of header files
+\item No more include directories
+\item No more inline functions and methods everywhere
+\item No more "header-only" libraries
+\item No more magic macro customizations for building our code
+\item The preprocessor has no understanding of types, but the compiler
+has - let's use it!
+\item Everything will be easier, simpler, and better
+\item My estimate: $\sim$50\% language complexity reduction
+\item Vastly improved build times
+\item No loss of expressiveness
+\end{itemize}
+\end{frame}
+
+
+%
+% THE BUILDING BLOCKS
+%
+\begin{frame}
+\frametitle{The building blocks}
+\section{The building blocks}
+We get 4 new "classifications" of files:
+\begin{itemize}
+\item Header unit (temporary solution of creating a BMI from a header file)
+\begin{itemize}
+\item \texttt{g++ -std=c++20 -fmodules-ts -xc++-system-header iostream}
+\item Creates BMI in \texttt{./gcm.cache/usr/include/c++/11/iostream.gcm}
+\end{itemize}
+\item Module interface unit / primary module interface unit
+\begin{itemize}
+\item This is a translation unit which exports a module
+\end{itemize}
+\item Module partition / submodule
+\begin{itemize}
+\item Another translation unit which belongs to a module interface
+\end{itemize}
+\item Module implementation unit
+\begin{itemize}
+\item A translation unit which may provide implementations to declarations
+in module interface
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\end{document}
